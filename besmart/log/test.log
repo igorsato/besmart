@@ -1,0 +1,644 @@
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "adresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar, "number" varchar, "postal_code" varchar, "neighborhood" varchar, "city" varchar, "state" varchar, "country" varchar, "complement" varchar, "reference" varchar, "customer_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE  INDEX "index_adresses_on_customer_id" ON "adresses" ("customer_id")[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "categories_has_products" ("product_id" integer, "category_id" integer)[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE  INDEX "index_categories_has_products_on_category_id" ON "categories_has_products" ("category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_categories_has_products_on_category_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_categories_has_products_on_category_id' AND type='index'
+[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE  INDEX "index_categories_has_products_on_product_id" ON "categories_has_products" ("product_id")[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "customers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "lastname" varchar, "username" varchar, "email" varchar DEFAULT '' NOT NULL, "cpf" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar)[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_customers_on_email" ON "customers" ("email")[0m
+  [1m[35m (0.6ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_customers_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_customers_on_email' AND type='index'
+[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_customers_on_reset_password_token" ON "customers" ("reset_password_token")[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "galleries" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" text, "attachable_type" varchar, "attachable_id" integer, "media_file_name" varchar, "media_content_type" varchar, "media_file_size" integer, "media_updated_at" datetime, "active" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE  INDEX "index_galleries_on_attachable_type_and_attachable_id" ON "galleries" ("attachable_type", "attachable_id")[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "managers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "lastname" varchar, "username" varchar, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_managers_on_email" ON "managers" ("email")[0m
+  [1m[35m (0.7ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_managers_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_managers_on_email' AND type='index'
+[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_managers_on_reset_password_token" ON "managers" ("reset_password_token")[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "order_has_products" ("product_id" integer, "order_id" integer)[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE  INDEX "index_order_has_products_on_order_id" ON "order_has_products" ("order_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_order_has_products_on_order_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_order_has_products_on_order_id' AND type='index'
+[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE  INDEX "index_order_has_products_on_product_id" ON "order_has_products" ("product_id")[0m
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "orders" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "payment_id" integer, "customer_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_customer_id" ON "orders" ("customer_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_payment_id" ON "orders" ("payment_id")[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "active" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" text, "description_short" varchar, "sku" varchar NOT NULL, "featured" boolean DEFAULT 'f', "active" boolean DEFAULT 'f', "cost_price" decimal(12,2) DEFAULT '0.0', "sale_price" decimal(12,2) DEFAULT '0.0' NOT NULL, "promotional_price" decimal(12,2) DEFAULT '0.0', "weight" decimal(12,2) DEFAULT '0.0' NOT NULL, "height" decimal(12,2) DEFAULT '0.0' NOT NULL, "width" decimal(12,2) DEFAULT '0.0' NOT NULL, "depth" decimal(12,2) DEFAULT '0.0' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "balance" integer)[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES ('20161015165026')[0m
+  [1m[35m (2.6ms)[0m  [1m[32mINSERT INTO schema_migrations (version) VALUES ('20161002150701'), ('20160923002217'), ('20161001001443'), ('20161015164605'), ('20161008183733'), ('20161001000913'), ('20160923002233'), ('20161002020502'), ('20160930235809'), ('20161008144955'), ('20161001000804'), ('20160930232742'), ('20161001001023'), ('20161002150751');
+
+[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", 2016-10-16 02:27:57 UTC], ["updated_at", 2016-10-16 02:27:57 UTC]]
+  [1m[35m (8.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.162752', '2016-10-16 02:27:58.162752', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.162752', '2016-10-16 02:27:58.162752', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.184985', '2016-10-16 02:27:58.184985', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.184985', '2016-10-16 02:27:58.184985', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.200231', '2016-10-16 02:27:58.200231', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.200231', '2016-10-16 02:27:58.200231', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.637854', '2016-10-16 02:27:58.637854', 980190962)[0m
+  [1m[36mFixture Insert (0.8ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.637854', '2016-10-16 02:27:58.637854', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.8ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.647906', '2016-10-16 02:27:58.647906', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.647906', '2016-10-16 02:27:58.647906', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.659054', '2016-10-16 02:27:58.659054', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.659054', '2016-10-16 02:27:58.659054', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.700803', '2016-10-16 02:27:58.700803', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.700803', '2016-10-16 02:27:58.700803', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.707147', '2016-10-16 02:27:58.707147', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.707147', '2016-10-16 02:27:58.707147', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.716342', '2016-10-16 02:27:58.716342', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.716342', '2016-10-16 02:27:58.716342', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.755700', '2016-10-16 02:27:58.755700', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.755700', '2016-10-16 02:27:58.755700', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.9ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.761986', '2016-10-16 02:27:58.761986', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.761986', '2016-10-16 02:27:58.761986', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.769976', '2016-10-16 02:27:58.769976', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.769976', '2016-10-16 02:27:58.769976', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.806447', '2016-10-16 02:27:58.806447', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.806447', '2016-10-16 02:27:58.806447', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.813352', '2016-10-16 02:27:58.813352', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.813352', '2016-10-16 02:27:58.813352', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.821921', '2016-10-16 02:27:58.821921', 980190962)[0m
+  [1m[36mFixture Insert (3.3ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.821921', '2016-10-16 02:27:58.821921', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.865118', '2016-10-16 02:27:58.865118', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.865118', '2016-10-16 02:27:58.865118', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.871914', '2016-10-16 02:27:58.871914', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.871914', '2016-10-16 02:27:58.871914', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.879183', '2016-10-16 02:27:58.879183', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.879183', '2016-10-16 02:27:58.879183', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.922790', '2016-10-16 02:27:58.922790', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.922790', '2016-10-16 02:27:58.922790', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.930038', '2016-10-16 02:27:58.930038', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.930038', '2016-10-16 02:27:58.930038', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.938120', '2016-10-16 02:27:58.938120', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.938120', '2016-10-16 02:27:58.938120', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (1.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.972921', '2016-10-16 02:27:58.972921', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:58.972921', '2016-10-16 02:27:58.972921', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.979178', '2016-10-16 02:27:58.979178', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:58.979178', '2016-10-16 02:27:58.979178', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.987734', '2016-10-16 02:27:58.987734', 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:58.987734', '2016-10-16 02:27:58.987734', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (1.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:59.028647', '2016-10-16 02:27:59.028647', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:59.028647', '2016-10-16 02:27:59.028647', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:59.036504', '2016-10-16 02:27:59.036504', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:59.036504', '2016-10-16 02:27:59.036504', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:59.043828', '2016-10-16 02:27:59.043828', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:59.043828', '2016-10-16 02:27:59.043828', 298486374)[0m
+  [1m[36mFixture Delete (0.8ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:59.080744', '2016-10-16 02:27:59.080744', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-10-16 02:27:59.080744', '2016-10-16 02:27:59.080744', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:59.087504', '2016-10-16 02:27:59.087504', 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "adresses" ("street", "number", "postal_code", "neighborhood", "city", "state", "country", "complement", "reference", "created_at", "updated_at", "id", "customer_id") VALUES ('MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', 'MyString', '2016-10-16 02:27:59.087504', '2016-10-16 02:27:59.087504', 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "products"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:59.095632', '2016-10-16 02:27:59.095632', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "products" ("name", "description", "description_short", "sku", "featured", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', 'MyString', '1', 'f', 'f', '2016-10-16 02:27:59.095632', '2016-10-16 02:27:59.095632', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "galleries"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "adresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "street" varchar, "number" varchar, "postal_code" varchar, "neighborhood" varchar, "city" varchar, "state" varchar, "country" varchar, "complement" varchar, "reference" varchar, "customer_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE  INDEX "index_adresses_on_customer_id" ON "adresses" ("customer_id")[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "slug" varchar)[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "categories_has_products" ("product_id" integer, "category_id" integer)[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE  INDEX "index_categories_has_products_on_category_id" ON "categories_has_products" ("category_id")[0m
+  [1m[35m (0.8ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_categories_has_products_on_category_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_categories_has_products_on_category_id' AND type='index'
+[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE  INDEX "index_categories_has_products_on_product_id" ON "categories_has_products" ("product_id")[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "customers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "lastname" varchar, "username" varchar, "email" varchar DEFAULT '' NOT NULL, "cpf" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "is_admin" boolean DEFAULT 'f')[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_customers_on_email" ON "customers" ("email")[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_customers_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_customers_on_email' AND type='index'
+[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_customers_on_reset_password_token" ON "customers" ("reset_password_token")[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "galleries" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" text, "attachable_type" varchar, "attachable_id" integer, "media_file_name" varchar, "media_content_type" varchar, "media_file_size" integer, "media_updated_at" datetime, "active" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE  INDEX "index_galleries_on_attachable_type_and_attachable_id" ON "galleries" ("attachable_type", "attachable_id")[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "product_id" integer, "order_id" integer, "unit_price" decimal(12,2), "quantity" integer DEFAULT 0, "total_price" decimal(12,2), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE  INDEX "index_order_items_on_order_id" ON "order_items" ("order_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_order_items_on_order_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_order_items_on_order_id' AND type='index'
+[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE  INDEX "index_order_items_on_product_id" ON "order_items" ("product_id")[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "order_statuses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "orders" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "payment_id" integer, "customer_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "order_status_id" integer, "subtotal" decimal(12,3) DEFAULT '0.0', "tax" decimal(12,3), "shipping" decimal(12,3), "total" decimal(12,3) DEFAULT '0.0')[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_customer_id" ON "orders" ("customer_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_order_status_id" ON "orders" ("order_status_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_order_status_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_order_status_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_payment_id" ON "orders" ("payment_id")[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "active" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE TABLE "products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" text, "description_short" varchar, "sku" varchar NOT NULL, "featured" boolean DEFAULT 'f', "active" boolean DEFAULT 'f', "cost_price" decimal(12,2) DEFAULT '0.0', "sale_price" decimal(12,2) DEFAULT '0.0' NOT NULL, "promotional_price" decimal(12,2) DEFAULT '0.0', "weight" decimal(12,2) DEFAULT '0.0' NOT NULL, "height" decimal(12,2) DEFAULT '0.0' NOT NULL, "width" decimal(12,2) DEFAULT '0.0' NOT NULL, "depth" decimal(12,2) DEFAULT '0.0' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "balance" integer, "slug" varchar, "qty_min_in_cart" integer DEFAULT 1, "qty_max_in_cart" integer)[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (3.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES ('20161024002840')[0m
+  [1m[35m (4.4ms)[0m  [1m[32mINSERT INTO schema_migrations (version) VALUES ('20161002150701'), ('20161023165924'), ('20161023140833'), ('20161015165026'), ('20160923002217'), ('20161001001443'), ('20161023140208'), ('20161015164605'), ('20161023140344'), ('20161008183733'), ('20161001000913'), ('20160923002233'), ('20161022181032'), ('20161016191803'), ('20161002020502'), ('20160930235809'), ('20161008144955'), ('20161001000804'), ('20160930232742'), ('20161001001023'), ('20161002150751'), ('20161023140030'), ('20161016214226'), ('20161017013343');
+
+[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", 2016-10-30 11:05:55 UTC], ["updated_at", 2016-10-30 11:05:55 UTC]]
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "type_address" varchar, "street" varchar, "number" varchar, "postal_code" varchar, "neighborhood" varchar, "city" varchar, "state" varchar, "country" varchar, "complement" varchar, "reference" varchar, "customer_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE  INDEX "index_addresses_on_customer_id" ON "addresses" ("customer_id")[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "categories" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "slug" varchar)[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "categories_has_products" ("product_id" integer, "category_id" integer)[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE  INDEX "index_categories_has_products_on_category_id" ON "categories_has_products" ("category_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_categories_has_products_on_category_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_categories_has_products_on_category_id' AND type='index'
+[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE  INDEX "index_categories_has_products_on_product_id" ON "categories_has_products" ("product_id")[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "customers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "lastname" varchar, "username" varchar, "email" varchar DEFAULT '' NOT NULL, "cpf" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "is_admin" boolean DEFAULT 'f')[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_customers_on_email" ON "customers" ("email")[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_customers_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_customers_on_email' AND type='index'
+[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_customers_on_reset_password_token" ON "customers" ("reset_password_token")[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "galleries" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" text, "attachable_type" varchar, "attachable_id" integer, "media_file_name" varchar, "media_content_type" varchar, "media_file_size" integer, "media_updated_at" datetime, "active" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE  INDEX "index_galleries_on_attachable_type_and_attachable_id" ON "galleries" ("attachable_type", "attachable_id")[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "product_id" integer, "order_id" integer, "unit_price" decimal(12,2), "quantity" integer DEFAULT 0, "total_price" decimal(12,2), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE  INDEX "index_order_items_on_order_id" ON "order_items" ("order_id")[0m
+  [1m[35m (0.9ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_order_items_on_order_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_order_items_on_order_id' AND type='index'
+[0m
+  [1m[35m (15.4ms)[0m  [1m[35mCREATE  INDEX "index_order_items_on_product_id" ON "order_items" ("product_id")[0m
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "order_statuses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "orders" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "payment_id" integer, "customer_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "order_status_id" integer, "subtotal" decimal(12,3) DEFAULT '0.0', "tax" decimal(12,3), "shipping" decimal(12,3), "total" decimal(12,3) DEFAULT '0.0')[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_customer_id" ON "orders" ("customer_id")[0m
+  [1m[35m (0.7ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_order_status_id" ON "orders" ("order_status_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_order_status_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_order_status_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_orders_on_customer_id' AND type='index'
+[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE  INDEX "index_orders_on_payment_id" ON "orders" ("payment_id")[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "active" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "products" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" text, "description_short" varchar, "sku" varchar NOT NULL, "featured" boolean DEFAULT 'f', "active" boolean DEFAULT 'f', "cost_price" decimal(12,2) DEFAULT '0.0', "sale_price" decimal(12,2) DEFAULT '0.0' NOT NULL, "promotional_price" decimal(12,2) DEFAULT '0.0', "weight" decimal(12,2) DEFAULT '0.0' NOT NULL, "height" decimal(12,2) DEFAULT '0.0' NOT NULL, "width" decimal(12,2) DEFAULT '0.0' NOT NULL, "depth" decimal(12,2) DEFAULT '0.0' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "balance" integer, "slug" varchar, "qty_min_in_cart" integer DEFAULT 1, "qty_max_in_cart" integer)[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (3.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES ('20161024002840')[0m
+  [1m[35m (3.1ms)[0m  [1m[32mINSERT INTO schema_migrations (version) VALUES ('20161002150701'), ('20161023165924'), ('20161001001443'), ('20161023140833'), ('20161015165026'), ('20160923002217'), ('20161023140208'), ('20161015164605'), ('20161023140344'), ('20161008183733'), ('20161001000913'), ('20160923002233'), ('20161022181032'), ('20161016191803'), ('20161002020502'), ('20160930235809'), ('20161008144955'), ('20161001000804'), ('20160930232742'), ('20161001001023'), ('20161002150751'), ('20161023140030'), ('20161016214226'), ('20161017013343');
+
+[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", 2016-11-17 20:11:40 UTC], ["updated_at", 2016-11-17 20:11:40 UTC]]
+  [1m[35m (3.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.8ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.037449', '2016-11-17 20:11:41.037449', 980190962)[0m
+  [1m[36mFixture Insert (0.8ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.037449', '2016-11-17 20:11:41.037449', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.059801', '2016-11-17 20:11:41.059801', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.059801', '2016-11-17 20:11:41.059801', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.072939', '2016-11-17 20:11:41.072939', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.072939', '2016-11-17 20:11:41.072939', 298486374)[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.480491', '2016-11-17 20:11:41.480491', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.480491', '2016-11-17 20:11:41.480491', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.487027', '2016-11-17 20:11:41.487027', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.487027', '2016-11-17 20:11:41.487027', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.493580', '2016-11-17 20:11:41.493580', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.493580', '2016-11-17 20:11:41.493580', 298486374)[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.528281', '2016-11-17 20:11:41.528281', 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.528281', '2016-11-17 20:11:41.528281', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.534596', '2016-11-17 20:11:41.534596', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.534596', '2016-11-17 20:11:41.534596', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.541073', '2016-11-17 20:11:41.541073', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.541073', '2016-11-17 20:11:41.541073', 298486374)[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.574960', '2016-11-17 20:11:41.574960', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.574960', '2016-11-17 20:11:41.574960', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.581101', '2016-11-17 20:11:41.581101', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.581101', '2016-11-17 20:11:41.581101', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.587947', '2016-11-17 20:11:41.587947', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.587947', '2016-11-17 20:11:41.587947', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.622845', '2016-11-17 20:11:41.622845', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.622845', '2016-11-17 20:11:41.622845', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.629116', '2016-11-17 20:11:41.629116', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.629116', '2016-11-17 20:11:41.629116', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.635652', '2016-11-17 20:11:41.635652', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.635652', '2016-11-17 20:11:41.635652', 298486374)[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.669308', '2016-11-17 20:11:41.669308', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.669308', '2016-11-17 20:11:41.669308', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.675615', '2016-11-17 20:11:41.675615', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.675615', '2016-11-17 20:11:41.675615', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.682348', '2016-11-17 20:11:41.682348', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.682348', '2016-11-17 20:11:41.682348', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.717066', '2016-11-17 20:11:41.717066', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.717066', '2016-11-17 20:11:41.717066', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.723279', '2016-11-17 20:11:41.723279', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.723279', '2016-11-17 20:11:41.723279', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.729755', '2016-11-17 20:11:41.729755', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.729755', '2016-11-17 20:11:41.729755', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.765163', '2016-11-17 20:11:41.765163', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.765163', '2016-11-17 20:11:41.765163', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.771376', '2016-11-17 20:11:41.771376', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.771376', '2016-11-17 20:11:41.771376', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.783922', '2016-11-17 20:11:41.783922', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.783922', '2016-11-17 20:11:41.783922', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.816701', '2016-11-17 20:11:41.816701', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.816701', '2016-11-17 20:11:41.816701', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.823835', '2016-11-17 20:11:41.823835', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.823835', '2016-11-17 20:11:41.823835', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.830468', '2016-11-17 20:11:41.830468', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.830468', '2016-11-17 20:11:41.830468', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.865566', '2016-11-17 20:11:41.865566', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.865566', '2016-11-17 20:11:41.865566', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.871900', '2016-11-17 20:11:41.871900', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.871900', '2016-11-17 20:11:41.871900', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.878417', '2016-11-17 20:11:41.878417', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.878417', '2016-11-17 20:11:41.878417', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.914513', '2016-11-17 20:11:41.914513', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.914513', '2016-11-17 20:11:41.914513', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.920815', '2016-11-17 20:11:41.920815', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.920815', '2016-11-17 20:11:41.920815', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.927314', '2016-11-17 20:11:41.927314', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.927314', '2016-11-17 20:11:41.927314', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.963895', '2016-11-17 20:11:41.963895', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:41.963895', '2016-11-17 20:11:41.963895', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.970510', '2016-11-17 20:11:41.970510', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:41.970510', '2016-11-17 20:11:41.970510', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.977271', '2016-11-17 20:11:41.977271', 980190962)[0m
+  [1m[36mFixture Insert (1.1ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:41.977271', '2016-11-17 20:11:41.977271', 298486374)[0m
+  [1m[36mFixture Delete (9.8ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.040281', '2016-11-17 20:11:42.040281', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.040281', '2016-11-17 20:11:42.040281', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.046671', '2016-11-17 20:11:42.046671', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.046671', '2016-11-17 20:11:42.046671', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.054008', '2016-11-17 20:11:42.054008', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.054008', '2016-11-17 20:11:42.054008', 298486374)[0m
+  [1m[36mFixture Delete (7.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.105579', '2016-11-17 20:11:42.105579', 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.105579', '2016-11-17 20:11:42.105579', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.114243', '2016-11-17 20:11:42.114243', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.114243', '2016-11-17 20:11:42.114243', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (1.0ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.127218', '2016-11-17 20:11:42.127218', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.127218', '2016-11-17 20:11:42.127218', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.8ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.8ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.201178', '2016-11-17 20:11:42.201178', 980190962)[0m
+  [1m[36mFixture Insert (0.8ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.201178', '2016-11-17 20:11:42.201178', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (1.6ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.211542', '2016-11-17 20:11:42.211542', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.211542', '2016-11-17 20:11:42.211542', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.221798', '2016-11-17 20:11:42.221798', 980190962)[0m
+  [1m[36mFixture Insert (0.9ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.221798', '2016-11-17 20:11:42.221798', 298486374)[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.276332', '2016-11-17 20:11:42.276332', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.276332', '2016-11-17 20:11:42.276332', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.284800', '2016-11-17 20:11:42.284800', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.6ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.284800', '2016-11-17 20:11:42.284800', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.294043', '2016-11-17 20:11:42.294043', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.294043', '2016-11-17 20:11:42.294043', 298486374)[0m
+  [1m[36mFixture Delete (0.8ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.331177', '2016-11-17 20:11:42.331177', 980190962)[0m
+  [1m[36mFixture Insert (0.8ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.331177', '2016-11-17 20:11:42.331177', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.338777', '2016-11-17 20:11:42.338777', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.338777', '2016-11-17 20:11:42.338777', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.345403', '2016-11-17 20:11:42.345403', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.345403', '2016-11-17 20:11:42.345403', 298486374)[0m
+  [1m[36mFixture Delete (0.8ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.393934', '2016-11-17 20:11:42.393934', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.393934', '2016-11-17 20:11:42.393934', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.402446', '2016-11-17 20:11:42.402446', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.402446', '2016-11-17 20:11:42.402446', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.410109', '2016-11-17 20:11:42.410109', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.410109', '2016-11-17 20:11:42.410109', 298486374)[0m
+  [1m[36mFixture Delete (0.9ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.9ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.447231', '2016-11-17 20:11:42.447231', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.447231', '2016-11-17 20:11:42.447231', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.454947', '2016-11-17 20:11:42.454947', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.454947', '2016-11-17 20:11:42.454947', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.463220', '2016-11-17 20:11:42.463220', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.463220', '2016-11-17 20:11:42.463220', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.7ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.504855', '2016-11-17 20:11:42.504855', 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.504855', '2016-11-17 20:11:42.504855', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.7ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.512315', '2016-11-17 20:11:42.512315', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.512315', '2016-11-17 20:11:42.512315', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.520682', '2016-11-17 20:11:42.520682', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.520682', '2016-11-17 20:11:42.520682', 298486374)[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.6ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.555829', '2016-11-17 20:11:42.555829', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.555829', '2016-11-17 20:11:42.555829', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.562045', '2016-11-17 20:11:42.562045', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.562045', '2016-11-17 20:11:42.562045', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.569073', '2016-11-17 20:11:42.569073', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.569073', '2016-11-17 20:11:42.569073', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.5ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.625764', '2016-11-17 20:11:42.625764', 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.625764', '2016-11-17 20:11:42.625764', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.632447', '2016-11-17 20:11:42.632447', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.632447', '2016-11-17 20:11:42.632447', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.3ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.639166', '2016-11-17 20:11:42.639166', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.639166', '2016-11-17 20:11:42.639166', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "payments"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.674360', '2016-11-17 20:11:42.674360', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "payments" ("name", "active", "created_at", "updated_at", "id") VALUES ('MyString', 'f', '2016-11-17 20:11:42.674360', '2016-11-17 20:11:42.674360', 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_items"[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.680429', '2016-11-17 20:11:42.680429', 980190962, 980190962, 980190962)[0m
+  [1m[36mFixture Insert (0.4ms)[0m  [1m[32mINSERT INTO "order_items" ("unit_price", "quantity", "total_price", "created_at", "updated_at", "id", "product_id", "order_id") VALUES (9.99, 1, 9.99, '2016-11-17 20:11:42.680429', '2016-11-17 20:11:42.680429', 298486374, 298486374, 298486374)[0m
+  [1m[36mFixture Delete (0.4ms)[0m  [1m[31mDELETE FROM "order_statuses"[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.691127', '2016-11-17 20:11:42.691127', 980190962)[0m
+  [1m[36mFixture Insert (0.3ms)[0m  [1m[32mINSERT INTO "order_statuses" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2016-11-17 20:11:42.691127', '2016-11-17 20:11:42.691127', 298486374)[0m
+  [1m[36mFixture Delete (0.5ms)[0m  [1m[31mDELETE FROM "adresses"[0m
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
